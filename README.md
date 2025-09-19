@@ -169,8 +169,12 @@ if err != nil {
 #### Options Methods
 - `SetDPI(dpi float32)` - Set target DPI
 - `SetResourcesDir(path string)` - Set directory for relative paths
+- `SetStylesheet(css string)` - Set CSS stylesheet for attribute resolution
 - `SetFontFamily(family string)` - Set default font family
 - `SetFontSize(size float32)` - Set default font size
+- `SetShapeRenderingMode(mode ShapeRenderingMode)` - Set shape rendering mode (see above list)
+- `SetTextRenderingMode(mode TextRenderingMode)` - Set text rendering mode (see above list)
+- `SetImageRenderingMode(mode ImageRenderingMode)` - Set image rendering mode (see above list)
 - `LoadSystemFonts()` - Load system fonts
 - `LoadFontFile(path string) error` - Load font from file
 - `LoadFontData(data []byte)` - Load font from memory
