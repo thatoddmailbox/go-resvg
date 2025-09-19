@@ -42,6 +42,8 @@ func main() {
 }
 ```
 
+> **Note:** The `Render()` and `RenderWithSize()` convenience functions use your system fonts and do not set default fonts for the various font styles (serif, sans-serif, ...). If your SVG contains text elements, it's recommended to create your own `Options` struct to specify the appropriate font settings.
+
 ### Custom Size Rendering
 
 ```go
@@ -81,6 +83,14 @@ func main() {
     // Set font preferences
     opts.SetFontFamily("Arial")
     opts.SetFontSize(14.0)
+
+    // Set specific font families for different CSS font types
+    // You should make sure these fonts exist on your system!
+    opts.SetSerifFamily("Times New Roman")
+    opts.SetSansSerifFamily("Arial")
+    opts.SetMonospaceFamily("Courier New")
+    opts.SetCursiveFamily("Comic Sans MS")
+    opts.SetFantasyFamily("Impact")
 
     // Parse SVG with custom options
     tree, err := resvg.ParseFromData(svgData, opts)
@@ -172,6 +182,11 @@ if err != nil {
 - `SetStylesheet(css string)` - Set CSS stylesheet for attribute resolution
 - `SetFontFamily(family string)` - Set default font family
 - `SetFontSize(size float32)` - Set default font size
+- `SetSerifFamily(family string)` - Set serif font family (default: "Times New Roman")
+- `SetSansSerifFamily(family string)` - Set sans-serif font family (default: "Arial")
+- `SetCursiveFamily(family string)` - Set cursive font family (default: "Comic Sans MS")
+- `SetFantasyFamily(family string)` - Set fantasy font family (default: "Papyrus" on macOS, "Impact" elsewhere)
+- `SetMonospaceFamily(family string)` - Set monospace font family (default: "Courier New")
 - `SetShapeRenderingMode(mode ShapeRenderingMode)` - Set shape rendering mode (see above list)
 - `SetTextRenderingMode(mode TextRenderingMode)` - Set text rendering mode (see above list)
 - `SetImageRenderingMode(mode ImageRenderingMode)` - Set image rendering mode (see above list)

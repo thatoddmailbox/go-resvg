@@ -119,6 +119,41 @@ func (o *Options) SetFontSize(size float32) {
 	C.resvg_options_set_font_size(o.cOpts, C.float(size))
 }
 
+// SetSerifFamily sets the serif font family
+func (o *Options) SetSerifFamily(family string) {
+	cFamily := C.CString(family)
+	defer C.free(unsafe.Pointer(cFamily))
+	C.resvg_options_set_serif_family(o.cOpts, cFamily)
+}
+
+// SetSansSerifFamily sets the sans-serif font family
+func (o *Options) SetSansSerifFamily(family string) {
+	cFamily := C.CString(family)
+	defer C.free(unsafe.Pointer(cFamily))
+	C.resvg_options_set_sans_serif_family(o.cOpts, cFamily)
+}
+
+// SetCursiveFamily sets the cursive font family
+func (o *Options) SetCursiveFamily(family string) {
+	cFamily := C.CString(family)
+	defer C.free(unsafe.Pointer(cFamily))
+	C.resvg_options_set_cursive_family(o.cOpts, cFamily)
+}
+
+// SetFantasyFamily sets the fantasy font family
+func (o *Options) SetFantasyFamily(family string) {
+	cFamily := C.CString(family)
+	defer C.free(unsafe.Pointer(cFamily))
+	C.resvg_options_set_fantasy_family(o.cOpts, cFamily)
+}
+
+// SetMonospaceFamily sets the monospace font family
+func (o *Options) SetMonospaceFamily(family string) {
+	cFamily := C.CString(family)
+	defer C.free(unsafe.Pointer(cFamily))
+	C.resvg_options_set_monospace_family(o.cOpts, cFamily)
+}
+
 // SetShapeRenderingMode sets the shape rendering method
 func (o *Options) SetShapeRenderingMode(mode ShapeRenderingMode) {
 	C.resvg_options_set_shape_rendering_mode(o.cOpts, C.resvg_shape_rendering(mode))
