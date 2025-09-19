@@ -342,6 +342,7 @@ func InitLog() {
 // Render is a convenience function that renders SVG data to an RGBA image
 func Render(data []byte) (*image.RGBA, error) {
 	opts := NewOptions()
+	opts.LoadSystemFonts()
 	defer opts.destroy()
 
 	tree, err := ParseFromData(data, opts)
@@ -365,6 +366,7 @@ func Render(data []byte) (*image.RGBA, error) {
 // RenderWithSize renders SVG data to an RGBA image with specified dimensions
 func RenderWithSize(data []byte, width, height uint32) (*image.RGBA, error) {
 	opts := NewOptions()
+	opts.LoadSystemFonts()
 	defer opts.destroy()
 
 	tree, err := ParseFromData(data, opts)
