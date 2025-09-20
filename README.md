@@ -10,7 +10,7 @@ go get github.com/thatoddmailbox/go-resvg
 
 ## Quick start
 
-### Simple SVG Rendering
+### Simple SVG rendering
 
 ```go
 package main
@@ -44,7 +44,7 @@ func main() {
 
 > **Note:** The `Render()` and `RenderWithSize()` convenience functions use your system fonts and do not set default fonts for the various font styles (serif, sans-serif, ...). If your SVG contains text elements, it's recommended to create your own `Options` struct to specify the appropriate font settings.
 
-### Custom Size Rendering
+### Custom size rendering
 
 ```go
 // Render with specific dimensions
@@ -54,9 +54,9 @@ if err != nil {
 }
 ```
 
-## Advanced Usage
+## Advanced usage
 
-### Custom Rendering Options
+### Custom rendering options
 
 ```go
 package main
@@ -107,7 +107,7 @@ func main() {
 }
 ```
 
-### Transform and Scaling
+### Transform and scaling
 
 ```go
 // Create a scaling transform
@@ -121,7 +121,7 @@ transform := resvg.Transform{
 img := tree.Render(transform, 400, 300)
 ```
 
-### Working with Files
+### Working with files
 
 ```go
 // Parse from file
@@ -137,7 +137,7 @@ if err != nil {
 }
 ```
 
-## API Reference
+## API reference
 
 ### Types
 
@@ -147,18 +147,18 @@ if err != nil {
 - **`Size`** - Width and height dimensions
 - **`Rect`** - Rectangle with position and size
 
-### Rendering Modes
+### Rendering modes
 
-#### Image Rendering
+#### Image rendering
 - `ImageRenderingOptimizeQuality` - Better quality (default)
 - `ImageRenderingOptimizeSpeed` - Faster rendering
 
-#### Shape Rendering
+#### Shape rendering
 - `ShapeRenderingOptimizeSpeed` - Faster rendering
 - `ShapeRenderingCrispEdges` - Sharp edges
 - `ShapeRenderingGeometricPrecision` - Best quality (default)
 
-#### Text Rendering
+#### Text rendering
 - `TextRenderingOptimizeSpeed` - Faster rendering
 - `TextRenderingOptimizeLegibility` - Better readability (default)
 - `TextRenderingGeometricPrecision` - Best quality
@@ -176,7 +176,7 @@ if err != nil {
 - `IdentityTransform() Transform` - Create identity transformation
 - `InitLog()` - Initialize resvg logging
 
-#### Options Methods
+#### Options methods
 - `SetDPI(dpi float32)` - Set target DPI
 - `SetResourcesDir(path string)` - Set directory for relative paths
 - `SetStylesheet(css string)` - Set CSS stylesheet for attribute resolution
@@ -194,7 +194,7 @@ if err != nil {
 - `LoadFontFile(path string) error` - Load font from file
 - `LoadFontData(data []byte)` - Load font from memory
 
-#### RenderTree Methods
+#### RenderTree methods
 - `Render(transform Transform, width, height uint32) *image.RGBA` - Render full SVG
 - `RenderNode(id string, transform Transform, width, height uint32) (*image.RGBA, error)` - Render specific node
 - `GetImageSize() Size` - Get natural SVG size
@@ -224,14 +224,14 @@ go run svg2png.go test.svg output.png 400 300
 go run advanced.go test.svg demo
 ```
 
-## Performance Tips
+## Performance tips
 
 1. **Reuse Options objects** when rendering multiple SVGs with the same settings
 2. **Load system fonts once** and reuse the Options object
 3. **Use speed-optimized rendering modes** for real-time applications
 4. **Cache parsed RenderTree objects** when rendering the same SVG multiple times
 
-## Error Handling
+## Error handling
 
 The library provides specific error types for different failure modes:
 
@@ -246,7 +246,7 @@ var (
 )
 ```
 
-## Platform Support
+## Platform support
 
 Currently, this package includes pre-compiled resvg binaries for:
 
@@ -254,7 +254,7 @@ Currently, this package includes pre-compiled resvg binaries for:
 
 For other platforms, you'll need to:
 
-1. Compile resvg as a static library
+1. Compile resvg as a static C library
 2. Place the library in `bin/{platform}/`
 3. Update the cgo directives accordingly
 
@@ -265,7 +265,7 @@ For other platforms, you'll need to:
 
 ## Troubleshooting
 
-### Common Issues
+### Common issues
 
 **"library not found" errors**: Ensure the resvg library is in the correct location for your platform.
 
