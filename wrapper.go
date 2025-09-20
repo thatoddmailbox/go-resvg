@@ -11,6 +11,7 @@ import (
 	"errors"
 	"fmt"
 	"image"
+	"math"
 	"runtime"
 	"unsafe"
 )
@@ -415,6 +416,60 @@ func RenderWithSize(data []byte, width, height uint32) (*image.RGBA, error) {
 	}
 
 	return tree.Render(IdentityTransform(), width, height), nil
+}
+
+// RenderScaledToSize renders SVG data to an RGBA image, scaling the content to fit the specified dimensions
+// while preserving aspect ratio and centering it on the canvas. If the natural aspect ratio doesn't match
+// the target, the content will be letterboxed (black bars on sides/top/bottom).
+func RenderScaledToSize(data []byte, width, height uint32) (*image.RGBA, error) {
+	opts := NewOptions()
+	opts.LoadSystemFonts()
+	defer opts.destroy()
+
+	tree, err := ParseFromData(data, opts)
+	if err != nil {
+		return nil, err
+	}
+	defer tree.destroy()
+
+	if tree.IsEmpty() {
+		return nil, errors.New("SVG contains no renderable elements")
+	}
+
+	naturalSize := tree.GetImageSize()
+	naturalW := float64(naturalSize.Width)
+	naturalH := float64(naturalSize.Height)
+	if naturalW <= 0 || naturalH <= 0 {
+		return nil, errors.New("SVG has invalid natural dimensions")
+	}
+
+	targetW := float64(width)
+	targetH := float64(height)
+
+	// Compute uniform scale to fit (preserve aspect ratio)
+	scaleX := targetW / naturalW
+	scaleY := targetH / naturalH
+	scale := math.Min(scaleX, scaleY)
+
+	// Scaled dimensions
+	scaledW := naturalW * scale
+	scaledH := naturalH * scale
+
+	// Center offsets
+	tx := (targetW - scaledW) / 2.0
+	ty := (targetH - scaledH) / 2.0
+
+	// Build the transform: scale uniformly, then translate to center
+	transform := Transform{
+		A: float32(scale), // Scale X
+		D: float32(scale), // Scale Y
+		E: float32(tx),    // Translate X
+		F: float32(ty),    // Translate Y
+		B: 0,              // Skew X
+		C: 0,              // Skew Y
+	}
+
+	return tree.Render(transform, width, height), nil
 }
 
 // Helper functions

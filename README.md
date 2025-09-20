@@ -54,6 +54,16 @@ if err != nil {
 }
 ```
 
+### Scaled size rendering
+
+```go
+// Render scaled to fit within dimensions, preserving aspect ratio (centers content if needed)
+img, err := resvg.RenderScaledToSize(svgData, 400, 300)
+if err != nil {
+    panic(err)
+}
+```
+
 ## Advanced usage
 
 ### Custom rendering options
@@ -167,7 +177,8 @@ if err != nil {
 
 #### Simple API
 - `Render(data []byte) (*image.RGBA, error)` - Render SVG at natural size
-- `RenderWithSize(data []byte, width, height uint32) (*image.RGBA, error)` - Render at custom size
+- `RenderWithSize(data []byte, width, height uint32) (*image.RGBA, error)` - Render at custom size (stretches to fit exact dimensions)
+- `RenderScaledToSize(data []byte, width, height uint32) (*image.RGBA, error)` - Render SVG scaled to fit within the specified dimensions while preserving aspect ratio and centering it on the canvas. If the natural aspect ratio doesn't match the target, the content will be centered.
 
 #### Advanced API
 - `NewOptions() *Options` - Create new options
